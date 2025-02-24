@@ -1,6 +1,9 @@
-import ollama
+from ollama import Client
 import yfinance as yf
 from typing import Dict, Any, Callable
+
+ollama_server_url = "http://192.168.1.207:11434"
+client = Client(host=ollama_server_url)
 
 def get_current_stock_price(symbol) -> float:
     stock = yf.Ticker(symbol)
@@ -58,7 +61,7 @@ If a valid function is available and arguments are correct, execute it. Otherwis
 prompt = 'Get me the 20 Day Moving Average Stock price for Apple'
 print('Prompt:', prompt)
 
-response = ollama.chat(
+response = client.chat(
     'llama3.1',
     messages=[{'role': 'system', 'content': system_prompt}, {'role': 'user', 'content': prompt}],
     tools=[get_current_stock_price_tool, get_20_day_moving_average_tool]

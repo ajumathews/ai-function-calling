@@ -1,6 +1,11 @@
 import oracledb
-import ollama
+from ollama import Client
 from typing import Dict, Callable
+
+
+
+ollama_server_url = "http://192.168.1.207:11434"
+client = Client(host=ollama_server_url)
 
 def query_products(price: float, stock_quantity: int) -> list:
     connection = oracledb.connect(user='ECOM', password='ECOM', dsn='localhost:1521/xe')
@@ -61,8 +66,8 @@ prompt = 'Find all laptops with a price less than $1000 and at least 10 in stock
 print('Prompt:', prompt)
 
 # Simulate the response from Ollama using the chat system
-response = ollama.chat(
-    'llama3.2',
+response = client.chat(
+    'llama3.1',
     messages=[{'role': 'user', 'content': prompt}],
     tools=[query_products_tool],
 )

@@ -1,4 +1,7 @@
-import ollama
+from ollama import Client
+
+ollama_server_url = "http://192.168.1.207:11434"
+client = Client(host=ollama_server_url)
 
 def add_two_numbers(a: int, b: int) -> int:
   return a + b
@@ -49,7 +52,7 @@ available_functions = {
 prompt = 'Substract 10 from 3'
 print('Prompt:', prompt)
 
-response = ollama.chat(
+response = client.chat(
     'llama3.1',
     messages=[{'role': 'user', 'content': prompt}],
     tools=[add_two_numbers, subtract_two_numbers]
