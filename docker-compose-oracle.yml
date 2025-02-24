@@ -1,0 +1,17 @@
+version: "3.2"
+services:
+  oracle:
+    image: gvenzl/oracle-xe:21
+    ports:
+      - "1521:1521"
+      - "8068:8067"
+    environment:
+      ORACLE_PASSWORD: "password"
+      ORACLE_ALLOW_REMOTE: true
+    volumes:
+      - sql-data:/u01/app/oracle
+      - ./scripts:/container-entrypoint-initdb.d
+    restart: always
+
+volumes:
+  sql-data:
